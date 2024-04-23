@@ -1,0 +1,13 @@
+.list-group-item-right-icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rotated {
+    transform: rotate(90deg);
+}
+
+.rotate-icon {
+    transition: transform 0.3s ease-in-out;
+}

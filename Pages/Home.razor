@@ -1,0 +1,179 @@
+﻿@page "/"
+@using DropdownMenuComponent.Components.DropdownMenu
+
+<PageTitle>Home</PageTitle>
+
+<p>Selected: @Selected</p>
+
+<MbDropdownMenu
+    Id="MbDropdownMenu"
+    Items="Items"
+    OnClickCallback="OnClick"
+    TItem="Guid" />
+
+@code {
+
+    string Selected { get; set; } = string.Empty;
+    List<Item<Guid>> Items = new List<Item<Guid>>
+    {
+        new Item<Guid> 
+        { 
+            Id = Guid.NewGuid(), 
+            Label = "Item 1",
+            Url = "/item1"
+        },
+        new Item<Guid> 
+        { 
+            Id = Guid.NewGuid(), 
+            Label = "Item 2",
+            Url = "/item2",
+            Items = new List<Item<Guid>>
+            {
+                new Item<Guid> 
+                { 
+                    Id = Guid.NewGuid(), 
+                    Label = "Item 2.1",
+                    Url = "/item2.1"
+                },
+                new Item<Guid> 
+                { 
+                    Id = Guid.NewGuid(), 
+                    Label = "Item 2.2",
+                    Url = "/item2.2",
+                    Items = new List<Item<Guid>>
+                    {
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 2.2.1",
+                            Url = "/item2.2.1"
+                        },
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 2.2.2",
+                            Url = "/item2.2.2"
+                        },
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 2.2.3",
+                            Url = "/item2.2.3"
+                        },
+                    }
+                },
+                new Item<Guid> 
+                { 
+                    Id = Guid.NewGuid(), 
+                    Label = "Item 2.3",
+                    Url = "/item2.3",
+                    Items = new List<Item<Guid>>
+                    {
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 2.3.1",
+                            Url = "/item2.3.1"
+                        },
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 2.3.2",
+                            Url = "/item2.3.2"
+                        },
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 2.3.3",
+                            Url = "/item2.3.3"
+                        },
+                    }
+                },
+            }
+        },
+        new Item<Guid> 
+        { 
+            Id = Guid.NewGuid(), 
+            Label = "Item 3",
+            Url = "/item3",
+            Items = new List<Item<Guid>>
+            {
+                new Item<Guid> 
+                { 
+                    Id = Guid.NewGuid(), 
+                    Label = "Item 3.1",
+                    Url = "/item3.1"
+                },
+                new Item<Guid> 
+                { 
+                    Id = Guid.NewGuid(), 
+                    Label = "Item 3.2",
+                    Url = "/item3.2",
+                    Items = new List<Item<Guid>>
+                    {
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 3.2.1",
+                            Url = "/item3.2.1"
+                        },
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 3.2.2",
+                            Url = "/item3.2.2"
+                        },
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 3.2.3",
+                            Url = "/item3.2.3"
+                        },
+                    }
+                },
+                new Item<Guid> 
+                { 
+                    Id = Guid.NewGuid(), 
+                    Label = "Item 3.3",
+                    Url = "/item3.3",
+                    Items = new List<Item<Guid>>
+                    {
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 3.3.1",
+                            Url = "/item3.3.1"
+                        },
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 3.3.2",
+                            Url = "/item3.3.2"
+                        },
+                        new Item<Guid> 
+                        { 
+                            Id = Guid.NewGuid(), 
+                            Label = "Item 3.3.3",
+                            Url = "/item3.3.3"
+                        },
+                },
+            }
+        },
+        },
+        new Item<Guid> 
+        { 
+            Id = Guid.NewGuid(), 
+            Label = "Item 4"
+        },
+        new Item<Guid> 
+        { 
+            Id = Guid.NewGuid(), 
+            Label = "Item 5"
+        },
+    };
+
+    void OnClick(Guid itemId)
+    {
+        Selected = itemId.ToString();
+    }
+}

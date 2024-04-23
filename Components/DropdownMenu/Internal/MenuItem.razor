@@ -1,0 +1,36 @@
+@typeparam TItemId
+
+<div class="list-group">
+    <a style="@($"padding-left: {Level}em;")" href="javascript:" class="@($"list-group-item list-group-item-right-icon {(SelectedItem!= null && SelectedItem.Equals(Item.Id) ? "active" : string.Empty)}")" data-toggle="collapse" data-target="@($"#Item{Item.Id}")" @onclick="@((e) => OnClick(Item.Id))">
+        @Item.Label
+        @if (Item.Items.Any())
+        {
+            <i class="@($"bi bi-caret-right-fill rotate-icon {(_isOpen ? "rotated" : string.Empty)}")"></i>
+        }
+    </a>
+    @if (Item.Items.Any())
+    {
+        <div class="list-group collapse" id="@($"Item{Item.Id}")">
+            @foreach (var subItem in Item.Items)
+            {
+                <MenuItem TItemId="TItemId" Item="subItem" SelectedItem="SelectedItem" OnClickCallback="OnClickCallback" Level="Level + 1" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Item<TItemId> Item { get; set; }
+    [Parameter] public TItemId SelectedItem { get; set; }
+    [Parameter] public EventCallback<TItemId> OnClickCallback { get; set; }
+    [Parameter] public int Level { get; set; } = 1;
+
+    private bool _isOpen;
+
+    public async Task OnClick(TItemId itemId)
+    {
+        _isOpen = !_isOpen;
+
+        await OnClickCallback.InvokeAsync(itemId);
+    }
+}

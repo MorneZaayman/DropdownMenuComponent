@@ -1,0 +1,41 @@
+@using DropdownMenuComponent.Components.DropdownMenu.Internal
+@typeparam TItem
+
+<div id="@(Id ?? $"{nameof(MbDropdownMenu<TItem>)}")">
+    <div class="list-group">
+        @foreach (var item in Items)
+        {
+            <MenuItem TItemId="TItem" Item="item" SelectedItem="SelectedItem" OnClickCallback="OnClick" />
+        }
+    </div>
+</div>
+
+@code {
+
+    [Inject] private IJSRuntime _jsRuntime { get; set; }
+
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public List<Item<TItem>> Items { get; set; }
+    [Parameter] public EventCallback<TItem> OnClickCallback { get; set; }
+
+    private TItem? SelectedItem { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (_jsRuntime is not null)
+            {
+                IJSObjectReference module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./Components/DropdownMenu/MbDropdownMenu.razor.js");
+                await module.InvokeVoidAsync("initialize", Id);
+            }
+        }
+    }
+
+    public async Task OnClick(TItem itemId)
+    {
+        SelectedItem = itemId;
+
+        await OnClickCallback.InvokeAsync(itemId);
+    }
+}
